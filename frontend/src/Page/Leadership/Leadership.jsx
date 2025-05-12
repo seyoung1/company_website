@@ -1,6 +1,14 @@
-import React from "react";
 import Human1 from "../../assets/Human1.jpg";
 
+/**
+ * **Leadership 컴포넌트**
+ *
+ * 회사의 임원진 및 핵심 구성원을 소개하는 페이지를 렌더링합니다.
+ *
+ * - CEO 인사말, 경영진, 핵심 구성원 정보를 포함합니다.
+ *
+ * @returns {JSX.Element} 리더십 소개 페이지 컴포넌트
+ */
 const Leadership = () => {
   const executives = [
     {
@@ -61,6 +69,7 @@ const Leadership = () => {
 
   return (
     <div className="container max-w-7xl mx-auto px-4 py-32">
+      {/* 임원진 소개 제목 및 설명 */}
       <div className="text-center mb-12">
         <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
           임원진 소개
@@ -70,6 +79,7 @@ const Leadership = () => {
         </p>
       </div>
 
+      {/* CEO 인사말 및 사진 */}
       <div className="flex flex-col md:flex-row gap-12 mb-24 items-center">
         <div className="md:w-2/3">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">CEO 인사말</h2>
@@ -100,61 +110,59 @@ const Leadership = () => {
         </div>
       </div>
 
+      {/* 경영진 및 핵심 구성원 소개 */}
       <div className="mb-24">
         <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
           경영진
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {executives.map((executive, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div className="aspect-square bg-gray-200">
-                <img
-                  src={executive.imageUrl}
-                  alt={executive.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{executive.name}</h3>
-                <p className="text-indigo-600 font-semibold mb-4">{executive.position}</p>
-                <p className="text-gray-600">{executive.description}</p>
-                </div>
-            </div>
+            <ProfileCard key={index} profile={executive} />
           ))}
         </div>
       </div>
 
+      {/* 핵심 구성원 소개 */}
       <div className="mb-24">
         <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">
           핵심 구성원
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {teamMembers.map((teamMember, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div className="aspect-square bg-gray-200">
-                <img
-                  src={teamMember.imageUrl}
-                  alt={teamMember.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{teamMember.name}</h3>
-                <p className="text-indigo-600 font-semibold mb-4">{teamMember.position}</p>
-                <p className="text-gray-600">{teamMember.description}</p>
-              </div>
-            </div>
+            <ProfileCard key={index} profile={teamMember} />
           ))}
         </div>
       </div>
     </div>
   );
 };
+
+/**
+ * **ProfileCard 컴포넌트**
+ * - 개인 프로필 카드를 렌더링합니다.
+ *
+ * @param {Object} profile - 프로필 정보
+ * @param {string} profile.name - 이름
+ * @param {string} profile.position - 직책
+ * @param {string} profile.description - 설명
+ * @param {string} profile.imageUrl - 이미지 URL
+ * @returns {JSX.Element} 프로필 카드 컴포넌트
+ */
+const ProfileCard = ({ profile }) => (
+  <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+    <div className="aspect-square bg-gray-200">
+      <img
+        src={profile.imageUrl}
+        alt={profile.name}
+        className="w-full h-full object-cover"
+      />
+    </div>
+    <div className="p-6">
+      <h3 className="text-2xl font-bold text-gray-800 mb-2">{profile.name}</h3>
+      <p className="text-indigo-600 font-semibold mb-4">{profile.position}</p>
+      <p className="text-gray-600">{profile.description}</p>
+    </div>
+  </div>
+);
 
 export default Leadership;
