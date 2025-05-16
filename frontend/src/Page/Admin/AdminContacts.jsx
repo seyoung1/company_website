@@ -1,5 +1,14 @@
-import React from "react";
-
+/**
+ * AdminContacts 컴포넌트는 관리자 페이지에서 문의 내역을
+ * 테이블 및 카드 형태로 보여주고, 상태별 필터, 검색, 페이지네이션 UI를 제공합니다.
+ * (현재는 더미 데이터와 UI만 구현되어 있습니다.)
+ *
+ * @component
+ * @returns {JSX.Element} 문의 관리 테이블 및 카드 UI를 반환합니다.
+ *
+ * @example
+ * <AdminContacts />
+ */
 const AdminContacts = () => {
   const contacts = [
     {
