@@ -1,11 +1,5 @@
-import React from 'react'
-
 const AdminEditPost = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default AdminEditPost
+export default AdminEditPost;

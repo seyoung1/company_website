@@ -159,9 +159,13 @@ const AdminContacts = () => {
       </div>
 
       <div className="mt-4 flex justify-center space-x-2 text-lg font-bold">
-        <button className="px-3 py-1 rounded border disabled:opacity-50">이전</button>
+        <button className="px-3 py-1 rounded border disabled:opacity-50">
+          이전
+        </button>
         <span className="px-3 py-1">1 / 1</span>
-        <button className="px-3 py-1 rounded border disabled:opacity-50">다음</button>
+        <button className="px-3 py-1 rounded border disabled:opacity-50">
+          다음
+        </button>
       </div>
     </div>
   );

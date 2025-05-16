@@ -1,9 +1,32 @@
-import React from "react";
 import companyImage from "../../assets/Image2.jpg";
 
+/**
+ * **About 컴포넌트**
+ *
+ * 회사 소개 페이지를 렌더링합니다.
+ *
+ * - 회사 이미지와 소개 텍스트를 포함합니다.
+ * - 회사의 핵심 가치, 비전, 연혁을 표시합니다.
+ *
+ * @returns {JSX.Element} 회사 소개 페이지 컴포넌트
+ */
 const About = () => {
+  const coreValues = [
+    { title: "혁신", desc: "끊임없는 도전과 혁신으로 미래를 선도합니다" },
+    { title: "신뢰", desc: "고객과의 신뢰를 최우선 가치로 삼습니다" },
+    { title: "성장", desc: "구성원들의 지속적인 성장을 지원합니다" },
+  ];
+
+  const companyHistory = [
+    { year: "2023", event: "글로벌 시장 진출" },
+    { year: "2022", event: "시리즈 B 투자 유치" },
+    { year: "2021", event: "주요 기술 특허 획득" },
+    { year: "2020", event: "회사 설립" },
+  ];
+
   return (
     <div className="container mx-auto px-4 py-32 max-w-7xl">
+      {/* 회사 이미지 및 환영 메시지 섹션 */}
       <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-24">
         <img src={companyImage} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900"></div>
@@ -16,6 +39,7 @@ const About = () => {
         </div>
       </div>
 
+      {/* 회사 소개 섹션 */}
       <div className="mb-24 max-w-4xl mx-auto">
         <h2 className="text-4xl font-bold mb-8 text-slate-800 text-center">
           회사 소개
@@ -38,12 +62,9 @@ const About = () => {
         </div>
       </div>
 
+      {/* 회사 핵심 가치 섹션 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-24">
-        {[
-          { title: "혁신", desc: "끊임없는 도전과 혁신으로 미래를 선도합니다" },
-          { title: "신뢰", desc: "고객과의 신뢰를 최우선 가치로 삼습니다" },
-          { title: "성장", desc: "구성원들의 지속적인 성장을 지원합니다" },
-        ].map((value, index) => (
+        {coreValues.map((value, index) => (
           <div
             key={index}
             className="bg-white rounded-xl shadow-lg text-center hover:shadow-2xl transition-all duration-300 border border-gray-100"
@@ -56,6 +77,7 @@ const About = () => {
         ))}
       </div>
 
+      {/* 회사 비전 섹션 */}
       <div className="mb-24 max-w-4xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-8 text-slate-800">회사 비전</h2>
         <p className="text-2xl leading-relaxed text-gray-600 font-light">
@@ -64,17 +86,13 @@ const About = () => {
         </p>
       </div>
 
+      {/* 회사 연혁 섹션 */}
       <div className="mb-24">
         <h2 className="text-4xl font-bold mb-12 text-slate-800 text-center">
           회사 연혁
         </h2>
         <div className="space-y-12 max-w-5xl mx-auto">
-          {[
-            { year: "2023", event: "글로벌 시장 진출" },
-            { year: "2022", event: "시리즈 B 투자 유치" },
-            { year: "2021", event: "주요 기술 특허 획득" },
-            { year: "2020", event: "회사 설립" },
-          ].map((item, index) => (
+          {companyHistory.map((item, index) => (
             <div
               key={index}
               className={`flex items-center gap-8 ${
@@ -82,10 +100,12 @@ const About = () => {
               }`}
             >
               <div className="w-1/2 text-center">
-              <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 border border-gray-100">
-                <h3 className="text-2xl font-bold mb-3 text-indigo-600">{item.year}</h3>
-                <p className="text-gray-700 text-lg">{item.event}</p>
-              </div>
+                <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300 border border-gray-100">
+                  <h3 className="text-2xl font-bold mb-3 text-indigo-600">
+                    {item.year}
+                  </h3>
+                  <p className="text-gray-700 text-lg">{item.event}</p>
+                </div>
               </div>
               <div className="w-4 h-4 bg-indigo-600 rounded-full"></div>
               <div className="w-1/2"></div>

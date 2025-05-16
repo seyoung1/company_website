@@ -3,14 +3,11 @@ import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import AdminNavbar from "./Components/AdminNavbar/AdminNavbar";
 
-import { useEffect, useState } from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
-import axios from "axios";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./Components/Layout/Layout";
+import AuthRedirectRoute from "./Components/Auth/AuthRedirectRoute";
+import AdminLayout from "./Components/Layout/AdminLayout";
+
 import MainPage from "./Page/MainPage/MainPage";
 import About from "./Page/About/About";
 import Leadership from "./Page/Leadership/Leadership";
@@ -24,37 +21,9 @@ import AdminEditPost from "./Page/Admin/AdminEditPost";
 import AdminCreatePost from "./Page/Admin/AdminCreatePost";
 import AdminContacts from "./Page/Admin/AdminContacts";
 
-function AuthRedirectRoute() {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/api/auth/verify-token",
-          {},
-          { withCredentials: true }
-        );
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.log("토큰 인증 실패: ", error);
-        setIsAuthenticated(false);
-      }
-    };
-    verifyToken();
-  }, []);
-
-  if (isAuthenticated === null) {
-    return null;
-  }
-
-  return isAuthenticated ? <Navigate to="/admin/posts" replace /> : <Outlet />;
-}
-
 function ProtectedRoute() {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); 
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
-
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -83,58 +52,27 @@ function ProtectedRoute() {
     <Outlet context={{ user }} />
   ) : (
     <Navigate to="/admin" replace />
-  )
-
-}
-
-function Layout() {
-  return (
-    <>
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </>
   );
 }
 
-function AdminLayout() {
-  return (
-    <>
-      <AdminNavbar />
-      <Outlet />
-    </>
-  );
-}
-
+/**
+ * **라우터 설정**
+ *
+ * 애플리케이션의 기본/관리자 라우트를 정의합니다.
+ * - `/` 경로는 기본 사용자 페이지를 렌더링합니다.
+ * - `/admin` 경로는 관리자 페이지를 렌더링하며, 인증 상태에 따라 접근이 제한됩니다.
+ */
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      {
-        index: true,
-        element: <MainPage />,
-      },
-      {
-        path: "/about",
-        element: <About />,
-      },
-      {
-        path: "/leadership",
-        element: <Leadership />,
-      },
-      {
-        path: "/board",
-        element: <Board />,
-      },
-      {
-        path: "/our-services",
-        element: <Services />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
+      { index: true, element: <MainPage /> },
+      { path: "/about", element: <About /> },
+      { path: "/leadership", element: <Leadership /> },
+      { path: "/board", element: <Board /> },
+      { path: "/our-services", element: <Services /> },
+      { path: "/contact", element: <Contact /> },
     ],
   },
   {
@@ -149,28 +87,23 @@ const router = createBrowserRouter([
       {
         element: <AdminLayout />,
         children: [
-          {
-            path: "posts",
-            element: <AdminPosts />,
-          },
-          {
-            path: "create-post",
-            element: <AdminCreatePost />,
-          },
-          {
-            path: "edit-post/:id",
-            element: <AdminEditPost />,
-          },
-          {
-            path: "contacts",
-            element: <AdminContacts />,
-          },
+          { path: "posts", element: <AdminPosts /> },
+          { path: "create-post", element: <AdminCreatePost /> },
+          { path: "edit-post/:id", element: <AdminEditPost /> },
+          { path: "contacts", element: <AdminContacts /> },
         ],
       },
     ],
   },
 ]);
 
+/**
+ * **App 컴포넌트**
+ *
+ * - 애플리케이션의 루트 컴포넌트로, 라우터를 렌더링합니다.
+ *
+ * @returns {JSX.Element} 애플리케이션 루트 컴포넌트
+ */
 function App() {
   return <RouterProvider router={router} />;
 }
