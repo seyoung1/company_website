@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 
 const AdminPosts = () => {
@@ -181,4 +182,10 @@ const AdminPosts = () => {
   );
 };
 
+=======
+const AdminPosts = () => {
+  return <div></div>;
+};
+
+>>>>>>> 55735431676ba93dbbff91b9ae5936ca09e90ed4
 export default AdminPosts;

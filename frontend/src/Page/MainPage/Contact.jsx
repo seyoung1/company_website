@@ -1,10 +1,39 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * **Contact 컴포넌트**
+ *
+ * 메인 페이지의 문의하기 섹션을 렌더링합니다.
+ *
+ * - 연락처 정보(전화, 이메일, 위치)를 표시합니다.
+ * - Google Maps를 포함하여 위치를 시각적으로 보여줍니다.
+ * - "문의하기" 버튼을 통해 문의 페이지로 이동할 수 있습니다.
+ *
+ * @returns {JSX.Element} 문의하기 섹션 컴포넌트
+ */
 const Contact = () => {
+  const contactInfo = [
+    {
+      title: "전화 문의",
+      info: "02-1234-5678",
+      subInfo: "평일 09:00 - 18:00",
+    },
+    {
+      title: "이메일 문의",
+      info: "support@example.com",
+      subInfo: "24시간 접수 가능",
+    },
+    {
+      title: "위치",
+      info: "서울특별시 강남구",
+      subInfo: "삼성동 123번지",
+    },
+  ];
+
   return (
     <div className="bg-white py-20 lg:py-48">
       <div className="container mx-auto px-4 max-w-6xl">
+        {/* 문의하기 제목 및 설명 */}
         <div className="text-center mb-12">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
             문의하기
@@ -14,24 +43,9 @@ const Contact = () => {
           </p>
         </div>
 
+        {/* 연락처 정보 */}
         <div className="grid md:grid-cols-3 gap-6 mb-20">
-          {[
-            {
-              title: "전화 문의",
-              info: "02-1234-5678",
-              subInfo: "평일 09:00 - 18:00",
-            },
-            {
-              title: "이메일 문의",
-              info: "support@example.com",
-              subInfo: "24시간 접수 가능",
-            },
-            {
-              title: "위치",
-              info: "서울특별시 강남구",
-              subInfo: "삼성동 123번지",
-            },
-          ].map((item, index) => (
+          {contactInfo.map((item, index) => (
             <div
               key={index}
               className="bg-white p-6 rounded-xl shadow-md transition-shadow duration-300 text-center"
@@ -43,6 +57,7 @@ const Contact = () => {
           ))}
         </div>
 
+        {/* Google Maps */}
         <div className="mb-12 max-w-4xl mx-auto">
           <div className="bg-white shadow rounded-xl overflow-hidden">
             <iframe
@@ -57,6 +72,7 @@ const Contact = () => {
           </div>
         </div>
 
+        {/* 문의하기 버튼 */}
         <div className="mt-12 text-center">
           <Link
             to="/contact"
