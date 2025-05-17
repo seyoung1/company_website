@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 /**
  * ProtectedRoute 컴포넌트는 사용자의 인증 상태를 확인하여
  * 인증된 사용자만 자식 라우트를 접근할 수 있도록 보호합니다.
