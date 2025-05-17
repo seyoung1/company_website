@@ -1,4 +1,6 @@
+
 import React from "react";
+
 
 const AdminPosts = () => {
   const dummyPosts= [
@@ -180,6 +182,8 @@ const AdminPosts = () => {
     </div>
   );
 };
+
+
 
 
 export default AdminPosts;
