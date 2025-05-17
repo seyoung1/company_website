@@ -12,6 +12,11 @@
  *   <Route path="/protected" element={<ProtectedPage />} />
  * </Route>
  */
+
+import { useState, useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import axios from "axios";
+
 function ProtectedRoute() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [user, setUser] = useState(null);

@@ -8,7 +8,50 @@
  *
  * @returns {JSX.Element} 문의하기 페이지 컴포넌트
  */
+import React, { useState } from "react";
+import axios from "axios";
+
 const Contact = () => {
+  const [formData, setFormData] = useState({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      status: "in progress",
+    });
+
+    
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/contact",
+          formData
+        );
+  
+        if (response.status === 201) {
+          alert("문의가 성공적으로 접수되었습니다.");
+          setFormData({
+            name: "",
+            email: "",
+            phone: "",
+            message: "",
+            status: "in progress",
+          });
+        }
+      } catch (error) {
+        console.log("에러 발생: ", error);
+        alert("문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+      }
+    };
+
   const contactDetails = [
     {
       icon: "phone",
@@ -47,30 +90,42 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             {/* 문의하기 폼 및 연락처 정보 */}
-            <form className="bg-white rounded-2xl shadow-xl p-8">
+            <form className="bg-white rounded-2xl shadow-xl p-8" onSubmit={handleSubmit}>
               <div className="space-y-6">
                 <InputField
                   label="이름"
                   type="text"
+                  name="name"
                   placeholder="홍길동"
                   required
+                  value={formData.name}
+                  onChange={handleChange}
                 />
                 <InputField
                   label="이메일"
                   type="email"
+                  name="email"
                   placeholder="example@email.com"
                   required
+                  value={formData.email}
+                  onChange={handleChange}
                 />
                 <InputField
                   label="연락처"
                   type="tel"
+                  name="phone"
                   placeholder="010-1234-5678"
                   required
+                  value={formData.phone}
+                  onChange={handleChange}
                 />
                 <TextAreaField
                   label="문의 내용"
+                  name="message"
                   placeholder="문의하실 내용을 자세히 적어주세요."
                   required
+                  value={formData.message}
+                  onChange={handleChange}
                 />
                 <button
                   className="w-full bg-blue-600 text-white py-4 rounded-lg font-medium
@@ -80,7 +135,7 @@ const Contact = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </div>  
 
           {/* 연락처 정보 및 지도 */}
           <div className="space-y-8">
@@ -139,11 +194,14 @@ const Contact = () => {
  * @param {boolean} props.required - 필수 여부
  * @returns {JSX.Element} 입력 필드 컴포넌트
  */
-const InputField = ({ label, type, placeholder, required }) => (
+const InputField = ({ label, type, placeholder, required, name, value, onChange}) => (
   <div>
     <label className="block text-gray-700 font-medium mb-2">{label}</label>
     <input
       type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
       required={required}
       className="w-full border border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-600"
@@ -161,13 +219,16 @@ const InputField = ({ label, type, placeholder, required }) => (
  * @param {boolean} props.required - 필수 여부
  * @returns {JSX.Element} 텍스트 영역 컴포넌트
  */
-const TextAreaField = ({ label, placeholder, required }) => (
+const TextAreaField = ({ label, name, placeholder, required, value, onChange }) => (
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-2">
       {label}
     </label>
     <textarea
       className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
+      name={name}
+      value={value}
+      onChange={onChange}
       placeholder={placeholder}
       required={required}
     ></textarea>
