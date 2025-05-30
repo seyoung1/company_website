@@ -24,6 +24,7 @@ import AdminPosts from "./Page/Admin/AdminPosts";
 import AdminEditPost from "./Page/Admin/AdminEditPost";
 import AdminCreatePost from "./Page/Admin/AdminCreatePost";
 import AdminContacts from "./Page/Admin/AdminContacts";
+import SinglePost from "./Page/SinglePost/SinglePost";
 
 /**
  * **라우터 설정**
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: "/about", element: <About /> },
       { path: "/leadership", element: <Leadership /> },
       { path: "/board", element: <Board /> },
+      { path: "/post/:id", element: <SinglePost /> },
       { path: "/our-services", element: <Services /> },
       { path: "/contact", element: <Contact /> },
     ],
