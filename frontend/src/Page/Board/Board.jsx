@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Board = () => {
   const [posts, setPosts] = useState([]);
@@ -9,6 +10,8 @@ const Board = () => {
   const [searchType, setSearchType] = useState("title");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -139,7 +142,7 @@ const Board = () => {
               </tr>
             ) : (
               paginatedPosts.map((post, index) => (
-                <tr key={post._id} className="hover:bg-gray-50 cursor-pointer">
+                <tr onClick={() => {navigate(`/post/${post._id}`)}} key={post._id} className="hover:bg-gray-50 cursor-pointer">
                   <td className="px-6 py-4 whitespace-nowrap">
                     {(currentPage - 1) * pageSize + index + 1}
                   </td>
@@ -157,7 +160,7 @@ const Board = () => {
         </table>
       </div>
 
-      <div className="block md:hidden grid grid-cols-1 gap-4">
+      <div className="md:hidden grid grid-cols-1 gap-4">
         {paginatedPosts.length === 0 ? (
           <div className="col-span-full text-center text-gray-500">
             게시글이 없습니다.
@@ -166,6 +169,7 @@ const Board = () => {
           paginatedPosts.map((post, index) => (
             <div
               key={post._id}
+              onClick={() => {navigate(`/post/${post._id}`)}}
               className="border rounded-lg p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
             >
               <div className="flex justify-between items-center mb-2">
