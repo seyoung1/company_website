@@ -43,10 +43,14 @@ const AdminLogin = () => {
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("로그인 시도:", formData);
     try {
       const response = await axios.post(
         "http://localhost:8080/login",
-        formData,
+        {
+          userID: formData.username,
+          password: formData.password,
+        },
         {
           withCredentials: true,
         }

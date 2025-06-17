@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const AdminNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,14 +9,7 @@ const AdminNavbar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/logout",
-        {},
-        { withCredentials: true }
-      );
-      if (response.status === 200) {
-        Navigate("/admin");
-      }
+      Navigate("/admin");
     } catch (error) {
       console.log("로그아웃 실패: ", error);
     }

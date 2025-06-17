@@ -6,10 +6,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import AdminLayout from "./Components/Layout/AdminLayout";
 
-// route setting
-import AuthRedirectRoute from "./Components/Auth/AuthRedirectRoute";
-import ProtectedRoute from "./utils/ProtectedRoute";
-
 // default page Components
 import MainPage from "./Page/MainPage/MainPage";
 import About from "./Page/About/About";
@@ -49,22 +45,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AuthRedirectRoute />,
-    children: [{ index: true, element: <AdminLogin /> }],
+    element: <AdminLogin />,
   },
   {
     path: "/admin",
-    element: <ProtectedRoute />,
+    element: <AdminLayout />,
     children: [
-      {
-        element: <AdminLayout />,
-        children: [
-          { path: "posts", element: <AdminPosts /> },
-          { path: "create-post", element: <AdminCreatePost /> },
-          { path: "edit-post/:id", element: <AdminEditPost /> },
-          { path: "contacts", element: <AdminContacts /> },
-        ],
-      },
+      { path: "posts", element: <AdminPosts /> },
+      { path: "create-post", element: <AdminCreatePost /> },
+      { path: "edit-post/:id", element: <AdminEditPost /> },
+      { path: "contacts", element: <AdminContacts /> },
     ],
   },
 ]);
