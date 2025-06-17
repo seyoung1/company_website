@@ -31,7 +31,7 @@ const Contact = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/contact",
+        "http://localhost:8080/api/contact",
         formData
       );
 

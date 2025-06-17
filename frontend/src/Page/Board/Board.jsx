@@ -16,7 +16,8 @@ const Board = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/post");
+        // 기존: http://localhost:3000/api/post
+        const response = await axios.get("http://localhost:8080/api/post");
         setPosts(response.data);
       } catch (error) {
         console.error("게시글 가져오기 실패: ", error);
@@ -133,22 +134,23 @@ const Board = () => {
           <tbody className="divide-y divide-gray-200">
             {paginatedPosts.length === 0 ? (
               <tr>
-                <td
-                  colSpan="4"
-                  className="px-4 py-8 text-center text-gray-500"
-                >
+                <td colSpan="4" className="px-4 py-8 text-center text-gray-500">
                   게시글이 없습니다.
                 </td>
               </tr>
             ) : (
               paginatedPosts.map((post, index) => (
-                <tr onClick={() => {navigate(`/post/${post._id}`)}} key={post._id} className="hover:bg-gray-50 cursor-pointer">
+                <tr
+                  onClick={() => {
+                    navigate(`/post/${post._id}`);
+                  }}
+                  key={post._id}
+                  className="hover:bg-gray-50 cursor-pointer"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     {(currentPage - 1) * pageSize + index + 1}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {post.title}
-                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">{post.title}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {new Date(post.createdAt).toLocaleDateString()}
                   </td>
@@ -169,7 +171,9 @@ const Board = () => {
           paginatedPosts.map((post, index) => (
             <div
               key={post._id}
-              onClick={() => {navigate(`/post/${post._id}`)}}
+              onClick={() => {
+                navigate(`/post/${post._id}`);
+              }}
               className="border rounded-lg p-4 bg-white shadow-md hover:shadow-lg transition-shadow"
             >
               <div className="flex justify-between items-center mb-2">
@@ -181,9 +185,7 @@ const Board = () => {
               <p className="text-sm text-gray-600 mb-3 truncate">
                 작성일: {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <p className="text-sm text-gray-600">
-                조회수: {post.views}
-              </p>
+              <p className="text-sm text-gray-600">조회수: {post.views}</p>
             </div>
           ))
         )}

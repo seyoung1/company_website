@@ -19,7 +19,7 @@ function AuthRedirectRoute() {
     const verifyToken = async () => {
       try {
         await axios.post(
-          "http://localhost:3000/api/auth/verify-token",
+          "http://localhost:8080/api/auth/verify-token",
           {},
           { withCredentials: true }
         );

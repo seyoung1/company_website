@@ -10,8 +10,9 @@ const AdminNavbar = () => {
 
   const handleLogout = async () => {
     try {
+      // 기존: http://localhost:3000/api/auth/logout
       const response = await axios.post(
-        "http://localhost:3000/api/auth/logout",
+        "http://localhost:8080/api/auth/logout",
         {},
         { withCredentials: true }
       );

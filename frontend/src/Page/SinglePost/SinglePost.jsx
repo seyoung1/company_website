@@ -43,7 +43,7 @@ const SinglePost = () => {
     const fetchPost = async () => {
       try {
         const postResponse = await axios.get(
-          `http://localhost:8080/post/${id}`
+          `http://localhost:8080/api/post/${id}`
         );
         setPost(postResponse.data);
       } catch (error) {
