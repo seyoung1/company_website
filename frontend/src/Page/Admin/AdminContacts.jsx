@@ -26,16 +26,14 @@ const AdminContacts = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/contact", {
+        const response = await axios.get("http://localhost:8080/contact", {
           withCredentials: true,
         });
-
         setContacts(response.data);
       } catch (error) {
         console.log("문의글 가져오기 실패: ", error);
       }
     };
-
     fetchContacts();
   }, []);
 
@@ -44,59 +42,53 @@ const AdminContacts = () => {
     setIsModalOpen(true);
   };
 
-   const handleStatusUpdate = async (newStatus) => {
+  const handleStatusUpdate = async (newStatus) => {
+    try {
+      await axios.put(
+        `http://localhost:8080/contact/${selectedContact.contactID}`,
+        { status: newStatus },
+        { withCredentials: true }
+      );
+      setContacts(
+        contacts.map((contact) =>
+          contact.contactID === selectedContact.contactID
+            ? { ...contact, status: newStatus }
+            : contact
+        )
+      );
+      setIsModalOpen(false);
+      Swal.fire("수정완료!", "상태가 성공적으로 수정되었습니다.", "success");
+    } catch (error) {
+      console.log("수정 실패: ", error);
+      Swal.fire("오류 발생", "수정 중 문제가 발생했습니다.", "error");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "삭제하시겠습니까?",
+      text: "이 작업은 되돌릴 수 없습니다!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    });
+
+    if (result.isConfirmed) {
       try {
-        await axios.put(
-          `http://localhost:3000/api/contact/${selectedContact._id}`,
-          { status: newStatus },
-          { withCredentials: true }
-        );
-  
-        setContacts(
-          contacts.map((contact) =>
-            contact._id === selectedContact._id
-              ? { ...contact, status: newStatus }
-              : contact
-          )
-        );
-  
-        setIsModalOpen(false);
-        Swal.fire("수정완료!", "상태가 성공적으로 수정되었습니다.", "success");
-      } catch (error) {
-        console.log("수정 실패: ", error);
-        Swal.fire("오류 발생", "수정 중 문제가 발생했습니다.", "error");
-      }
-    };
-
-     const handleDelete = async (id) => {
-        const result = await Swal.fire({
-          title: "삭제하시겠습니까?",
-          text: "이 작업은 되돌릴 수 없습니다!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "삭제",
-          cancelButtonText: "취소",
+        await axios.delete(`http://localhost:8080/contact/${id}`, {
+          withCredentials: true,
         });
-    
-        if (result.isConfirmed) {
-          try {
-            await axios.delete(`http://localhost:3000/api/contact/${id}`, {
-              withCredentials: true,
-            });
-    
-            setContacts(contacts.filter(contact => contact._id !== id));
-            Swal.fire("삭제완료!", "문의가 성공적으로 삭제되었습니다.", "success");
-          } catch (error) {
-            console.log("삭제 실패: ", error);
-            Swal.fire("오류 발생", "삭제 중 문제가 발생했습니다.", "error");
-          }
-        }
-      };
-  
-
-
+        setContacts(contacts.filter((contact) => contact.contactID !== id));
+        Swal.fire("삭제완료!", "문의가 성공적으로 삭제되었습니다.", "success");
+      } catch (error) {
+        console.log("삭제 실패: ", error);
+        Swal.fire("오류 발생", "삭제 중 문제가 발생했습니다.", "error");
+      }
+    }
+  };
 
   const filteredContacts = useMemo(() => {
     return contacts.filter((contact) => {
@@ -235,10 +227,16 @@ const AdminContacts = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-center space-x-2">
-                        <button onClick={() => handleEdit(contact)} className="px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <button
+                          onClick={() => handleEdit(contact)}
+                          className="px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
                           수정
                         </button>
-                        <button  onClick={() => handleDelete(contact._id)} className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600">
+                        <button
+                          onClick={() => handleDelete(contact._id)}
+                          className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600"
+                        >
                           삭제
                         </button>
                       </div>
@@ -304,7 +302,10 @@ const AdminContacts = () => {
                   >
                     수정
                   </button>
-                  <button  onClick={() => handleDelete(contact._id)} className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600">
+                  <button
+                    onClick={() => handleDelete(contact._id)}
+                    className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
                     삭제
                   </button>
                 </div>

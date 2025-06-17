@@ -21,7 +21,7 @@ const AdminEditPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/post/${id}`);
+        const response = await axios.get(`http://localhost:8080/post/${id}`);
 
         setFormData({
           title: response.data.title,
@@ -80,7 +80,7 @@ const AdminEditPost = () => {
           fileFormData.append("originalName", encodedFileName);
 
           const response = await axios.post(
-            "http://localhost:3000/api/upload/file",
+            "http://localhost:8080/upload/file",
             fileFormData,
             {
               withCredentials: true,
@@ -109,7 +109,7 @@ const AdminEditPost = () => {
         currentImages: currentImages,
       };
 
-      await axios.put(`http://localhost:3000/api/post/${id}`, postData, {
+      await axios.put(`http://localhost:8080/post/${id}`, postData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -364,7 +364,9 @@ const AdminEditPost = () => {
 
             {formData.fileList.length > 0 && (
               <div className="mt-4 space-y-2">
-                <p className="font-medium text-gray-700">새로 추가된 파일 목록:</p>
+                <p className="font-medium text-gray-700">
+                  새로 추가된 파일 목록:
+                </p>
                 <ul className="bg-gray-50 rounded-lg divide-y divide-gray-200">
                   {formData.fileList.map((file) => (
                     <li

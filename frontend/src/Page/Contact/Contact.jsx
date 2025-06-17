@@ -13,14 +13,13 @@ import axios from "axios";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      phone: "",
-      message: "",
-      status: "in progress",
-    });
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    status: "in progress",
+  });
 
-    
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -28,29 +27,29 @@ const Contact = () => {
     });
   };
 
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/api/contact",
-          formData
-        );
-  
-        if (response.status === 201) {
-          alert("문의가 성공적으로 접수되었습니다.");
-          setFormData({
-            name: "",
-            email: "",
-            phone: "",
-            message: "",
-            status: "in progress",
-          });
-        }
-      } catch (error) {
-        console.log("에러 발생: ", error);
-        alert("문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/contact",
+        formData
+      );
+
+      if (response.status === 201) {
+        alert("문의가 성공적으로 접수되었습니다.");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          status: "in progress",
+        });
       }
-    };
+    } catch (error) {
+      console.log("에러 발생: ", error);
+      alert("문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+    }
+  };
 
   const contactDetails = [
     {
@@ -90,7 +89,10 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             {/* 문의하기 폼 및 연락처 정보 */}
-            <form className="bg-white rounded-2xl shadow-xl p-8" onSubmit={handleSubmit}>
+            <form
+              className="bg-white rounded-2xl shadow-xl p-8"
+              onSubmit={handleSubmit}
+            >
               <div className="space-y-6">
                 <InputField
                   label="이름"
@@ -135,7 +137,7 @@ const Contact = () => {
                 </button>
               </div>
             </form>
-          </div>  
+          </div>
 
           {/* 연락처 정보 및 지도 */}
           <div className="space-y-8">
@@ -194,7 +196,15 @@ const Contact = () => {
  * @param {boolean} props.required - 필수 여부
  * @returns {JSX.Element} 입력 필드 컴포넌트
  */
-const InputField = ({ label, type, placeholder, required, name, value, onChange}) => (
+const InputField = ({
+  label,
+  type,
+  placeholder,
+  required,
+  name,
+  value,
+  onChange,
+}) => (
   <div>
     <label className="block text-gray-700 font-medium mb-2">{label}</label>
     <input
@@ -219,7 +229,14 @@ const InputField = ({ label, type, placeholder, required, name, value, onChange}
  * @param {boolean} props.required - 필수 여부
  * @returns {JSX.Element} 텍스트 영역 컴포넌트
  */
-const TextAreaField = ({ label, name, placeholder, required, value, onChange }) => (
+const TextAreaField = ({
+  label,
+  name,
+  placeholder,
+  required,
+  value,
+  onChange,
+}) => (
   <div>
     <label className="block text-sm font-medium text-gray-700 mb-2">
       {label}

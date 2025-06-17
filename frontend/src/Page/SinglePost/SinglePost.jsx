@@ -16,8 +16,8 @@ import { styled } from "@mui/material/styles";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { format } from "date-fns";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ShareIcon from '@mui/icons-material/Share';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ShareIcon from "@mui/icons-material/Share";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -42,7 +42,9 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postResponse = await axios.get(`http://localhost:3000/api/post/${id}`);
+        const postResponse = await axios.get(
+          `http://localhost:8080/post/${id}`
+        );
         setPost(postResponse.data);
       } catch (error) {
         console.error("게시글 로딩 실패:", error);
@@ -78,7 +80,7 @@ const SinglePost = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 14 }}>
-      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
         <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
           <ArrowBackIcon />
         </IconButton>
@@ -119,7 +121,7 @@ const SinglePost = () => {
         <Box sx={{ my: 4 }}>
           <div
             dangerouslySetInnerHTML={{ __html: post.renderedContent }}
-            style={{ lineHeight: 1.8, fontSize: '1.2rem' }}
+            style={{ lineHeight: 1.8, fontSize: "1.2rem" }}
           />
         </Box>
 

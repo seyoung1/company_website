@@ -16,11 +16,13 @@ const AdminCreatePost = () => {
   const [currentUpload, setCurrentUpload] = useState(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
 
-  const UploadModal = ({ progress, fileName }) => (
+  const UploadModal = ({ progress, fileName }) =>
     showUploadModal && (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">파일 업로드 중...</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            파일 업로드 중...
+          </h3>
           <p className="text-sm text-gray-600 mb-4">{fileName}</p>
           <div className="relative pt-1">
             <div className="overflow-hidden h-2 mb-4 text-xs flex rounded-full bg-gray-200">
@@ -35,8 +37,7 @@ const AdminCreatePost = () => {
           </div>
         </div>
       </div>
-    )
-  );
+    );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ const AdminCreatePost = () => {
           fileFormData.append("originalName", encodedFileName);
 
           const response = await axios.post(
-            "http://localhost:3000/api/upload/file",
+            "http://localhost:8080/upload/file",
             fileFormData,
             {
               withCredentials: true,
@@ -81,16 +82,12 @@ const AdminCreatePost = () => {
         fileUrl: uploadedFiles,
       };
 
-      await axios.post(
-        "http://localhost:3000/api/post",
-        postData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.post("http://localhost:8080/post", postData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       setShowUploadModal(false);
       navigate("/admin/posts");
@@ -120,7 +117,9 @@ const AdminCreatePost = () => {
   const handleFileDelete = (fileId) => {
     setFormData((prev) => ({
       ...prev,
-      files: prev.files.filter((_, index) => prev.fileList[index].id !== fileId),
+      files: prev.files.filter(
+        (_, index) => prev.fileList[index].id !== fileId
+      ),
       fileList: prev.fileList.filter((file) => file.id !== fileId),
     }));
   };

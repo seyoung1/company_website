@@ -45,7 +45,7 @@ const AdminLogin = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        "http://localhost:8080/login",
         formData,
         {
           withCredentials: true,
