@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   const scrollToTop = () => {
-    alert("함수가 실행되었습니다.");
+    // alert("함수가 실행되었습니다."); 
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -15,7 +15,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">회사 소개</h3>
             <p className="text-gray-400">
-              저희 회사는 최고의 서비스를 제공하기 위해 노력하고 있습니다.
+              #STORY는 최고의 서비스를 제공하기 위해 노력하고 있습니다.
             </p>
           </div>
 
@@ -81,10 +81,10 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">연락처</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>경상북도 하양시</li>
-              <li>OO동 123번지</li>
-              <li>전화번호:010-0000-0000</li>
-              <li>이메일:info@example.com</li>
+              <li>경상북도 경산시</li>
+              <li>진량읍 대구대로 201</li>
+              <li>전화번호:010-2677-4337</li>
+              <li>이메일:yxxxung@naver.com</li>
             </ul>
           </div>
           <div>

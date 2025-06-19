@@ -12,10 +12,10 @@ import HeroImage from "../../assets/image1.jpg";
  */
 const Hero = () => {
   const stats = [
-    { number: "1,200+", label: "설치 완료" },
-    { number: "98%", label: "고객 만족도" },
-    { number: "15년+", label: "업계 경력" },
-    { number: "24/7", label: "기술 지원" },
+    { number: "다양성", label: "새로운 취향을 발견하는 공간" },
+    { number: "브랜드 철학", label: "가치 있는 소비, #STORY와 함께" },
+    { number: "콘텐츠", label: "쇼핑과 이야기가 만나는 곳" },
+    { number: "사용자 중심", label: "당신의 일상에서 시작되는 이야기" },
   ];
 
   return (
@@ -26,14 +26,14 @@ const Hero = () => {
           {/* 왼쪽 텍스트 섹션 */}
           <div className="flex-1 text-center lg:text-left">
             <h1 className="text-3xl sm:text-4xl 2xl:text-7xl font-bold text-gray-800 leading-tight mb-6 lg:mb-12">
-              태양광 설비 전문가와 함께
+              "당신의 이야기를 담다,
               <span className="block text-blue-600 mt-2 lg:mt-6">
-                미래를 만들어갑니다.
+                #STORY"
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-800 text-semibold mb-8 max-w-2xl mx-auto">
-              안전하고 효율적인 태양광 설비 설치부터 유지보수까지, 전문가들이
-              함께합니다.
+              쇼핑몰부터 블로그까지, 누구나 쉽게 접근할 수 있는 
+              웹 플랫폼을 제공합니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <CTAButton
@@ -59,7 +59,7 @@ const Hero = () => {
         </div>
 
         {/* 통계 정보 섹션 */}
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 mt-32">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
               <StatCard key={index} number={stat.number} label={stat.label} />
