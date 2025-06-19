@@ -78,9 +78,13 @@ const AdminContacts = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:8080/api/contact/${id}`, {
-          withCredentials: true,
-        });
+        console.log(id);
+        await axios.delete(
+          `http://localhost:8080/api/contact/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
         setContacts(contacts.filter((contact) => contact.contactID !== id));
         Swal.fire("삭제완료!", "문의가 성공적으로 삭제되었습니다.", "success");
       } catch (error) {
@@ -234,7 +238,7 @@ const AdminContacts = () => {
                           수정
                         </button>
                         <button
-                          onClick={() => handleDelete(contact._id)}
+                          onClick={() => handleDelete(contact.contactID)}
                           className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600"
                         >
                           삭제
@@ -303,7 +307,7 @@ const AdminContacts = () => {
                     수정
                   </button>
                   <button
-                    onClick={() => handleDelete(contact._id)}
+                    onClick={() => handleDelete(contact.contactID)}
                     className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600"
                   >
                     삭제

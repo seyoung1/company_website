@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   const scrollToTop = () => {
-    // alert("함수가 실행되었습니다."); 
+     // alert("함수가 실행되었습니다."); 
     window.scrollTo({
       top: 0,
       behavior: "smooth",

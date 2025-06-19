@@ -53,7 +53,7 @@ const Board = () => {
 
   return (
     <div className="p-4 mx-auto max-w-7xl py-32">
-      <h1 className="text-4xl font-bold mb-6 text-center">업무 게시판</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">게시판</h1>
 
       <div className="mb-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex w-full md:w-auto gap-2">
