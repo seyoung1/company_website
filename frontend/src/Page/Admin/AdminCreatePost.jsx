@@ -82,7 +82,7 @@ const AdminCreatePost = () => {
         fileUrl: uploadedFiles,
       };
 
-      await axios.post("http://localhost:8080/post", postData, {
+      await axios.post("http://localhost:8080/api/post", postData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const AdminCreatePost = () => {
                     formData.append("image", blobInfo.blob());
 
                     const response = await axios.post(
-                      "http://localhost:3000/api/upload/image",
+                      "http://localhost:8080/api/upload/image", // 수정: /api/upload/image
                       formData,
                       {
                         withCredentials: true,

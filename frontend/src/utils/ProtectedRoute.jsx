@@ -25,7 +25,7 @@ function ProtectedRoute() {
     const verifyToken = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/auth/verify-token",
+          "http://localhost:8080/api/auth/verify-token", // 수정
           {},
           { withCredentials: true }
         );

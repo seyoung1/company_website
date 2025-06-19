@@ -46,9 +46,12 @@ const AdminLogin = () => {
     try {
       const response = await axios.post(
         "http://localhost:8080/login",
-        formData,
         {
-          withCredentials: true,
+          userID: formData.username,
+          password: formData.password,
+        },
+        {
+          withCredentials: true, // 반드시 필요!
         }
       );
 
@@ -98,6 +101,7 @@ const AdminLogin = () => {
               },
             ].map((field) => (
               <InputField
+                key={field.id} // key 추가!
                 id={field.id}
                 name={field.id}
                 type={field.type}

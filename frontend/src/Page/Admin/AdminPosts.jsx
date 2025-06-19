@@ -153,7 +153,7 @@ const AdminPosts = () => {
               </tr>
             ) : (
               paginatedPosts.map((post, index) => (
-                <tr key={post._id} className="border-b">
+                <tr key={post.postID || post.id}>
                   <td className="px-4 py-3">
                     {(currentPage - 1) * pageSize + index + 1}
                   </td>
@@ -227,13 +227,15 @@ const AdminPosts = () => {
                       <button
                         className="px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 whitespace-nowrap writing-normal"
                         onClick={() =>
-                          (window.location.href = `/admin/edit-post/${post._id}`)
+                          (window.location.href = `/admin/edit-post/${
+                            post.postID || post.id
+                          }`)
                         }
                       >
                         수정
                       </button>
                       <button
-                        onClick={() => handleDelete(post._id)}
+                        onClick={() => handleDelete(post.postID || post.id)}
                         className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 whitespace-nowrap writing-normal"
                       >
                         삭제
