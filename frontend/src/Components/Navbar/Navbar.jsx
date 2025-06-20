@@ -4,7 +4,7 @@ import { HiMenu, HiX } from "react-icons/hi";
 
 const menuItems = [
   { path: "/", label: "홈" },
-  { path: "/about", label: "회사 정보" },
+  { path: "/about", label: "프로젝트 정보" },
   { path: "/leadership", label: "팀원 소개" },
   { path: "/board", label: "게시판" },
   { path: "/our-services", label: "제공 기술" },
