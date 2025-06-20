@@ -88,6 +88,18 @@ const SinglePost = () => {
     );
   }
 
+  if (!post) {
+    return (
+      <Container maxWidth="lg" sx={{ py: 14 }}>
+        <StyledPaper elevation={2}>
+          <Typography variant="h5" color="error" align="center">
+            게시글을 찾을 수 없습니다.
+          </Typography>
+        </StyledPaper>
+      </Container>
+    );
+  }
+
   return (
     <Container maxWidth="lg" sx={{ py: 14 }}>
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
@@ -104,23 +116,25 @@ const SinglePost = () => {
           <Box sx={{ flexGrow: 1 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}>
               <Typography variant="body2" color="text.secondary">
-                No. {post.number}
+                No. {post?.number}
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <VisibilityIcon
                   sx={{ fontSize: 18, color: "text.secondary" }}
                 />
                 <Typography variant="body2" color="text.secondary">
-                  {post.views}
+                  {post?.views}
                 </Typography>
               </Box>
             </Box>
             <Typography variant="h5" component="h1" gutterBottom>
-              {post.title}
+              {post?.title}
             </Typography>
             <Box sx={{ display: "flex", gap: 2, color: "text.secondary" }}>
               <Typography variant="body2">
-                {format(new Date(post.createdAt), "yyyy-MM-dd HH:mm:ss")}
+                {post?.createdAt && !isNaN(new Date(post.createdAt))
+                  ? format(new Date(post.createdAt), "yyyy-MM-dd HH:mm:ss")
+                  : "날짜 정보 없음"}
               </Typography>
             </Box>
           </Box>
@@ -143,12 +157,12 @@ const SinglePost = () => {
 
         <Box sx={{ my: 4 }}>
           <div
-            dangerouslySetInnerHTML={{ __html: post.renderedContent }}
+            dangerouslySetInnerHTML={{ __html: post?.renderedContent || "" }}
             style={{ lineHeight: 1.8, fontSize: "1.2rem" }}
           />
         </Box>
 
-        {post.fileUrl && post.fileUrl.length > 0 && (
+        {post?.fileUrl && post.fileUrl.length > 0 && (
           <Box sx={{ mt: 4, p: 2, bgcolor: "grey.50", borderRadius: 1 }}>
             <Typography variant="subtitle2" gutterBottom>
               첨부파일

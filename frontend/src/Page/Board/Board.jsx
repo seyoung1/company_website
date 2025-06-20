@@ -142,7 +142,7 @@ const Board = () => {
               paginatedPosts.map((post, index) => (
                 <tr
                   onClick={() => {
-                    navigate(`/post/${post._id}`);
+                    navigate(`/post/${post.postID}`);
                   }}
                   key={post._id}
                   className="hover:bg-gray-50 cursor-pointer"

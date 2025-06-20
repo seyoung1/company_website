@@ -257,7 +257,7 @@ const AdminPosts = () => {
         ) : (
           paginatedPosts.map((post, index) => (
             <div
-              key={post._id}
+              key={post.postID || post.id || post._id} // 고유 key로 통일
               className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
             >
               <div className="flex justify-between items-start mb-2">

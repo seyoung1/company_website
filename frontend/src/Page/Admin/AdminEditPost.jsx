@@ -12,23 +12,42 @@ const AdminEditPost = () => {
     files: [],
     fileList: [],
     existingFiles: [],
+    productID: "", // 추가
   });
   const editorRef = useRef(null);
   const [uploadProgress, setUploadProgress] = useState({});
   const [currentUpload, setCurrentUpload] = useState(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [orderedProducts, setOrderedProducts] = useState([]); // 추가
+
+  // 주문 상품 목록 불러오기
+  useEffect(() => {
+    const fetchOrderedProducts = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/purchase", {
+          withCredentials: true,
+        });
+        setOrderedProducts(res.data.products || []);
+      } catch (e) {
+        setOrderedProducts([]);
+      }
+    };
+    fetchOrderedProducts();
+  }, []);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/post/${id}`);
-
+        const response = await axios.get(
+          `http://localhost:8080/api/post/${id}`
+        );
         setFormData({
           title: response.data.title,
           content: response.data.content,
           files: [],
           fileList: [],
           existingFiles: response.data.fileUrl || [],
+          productID: response.data.productID || "", // 추가
         });
       } catch (error) {
         console.log("게시물을 가져오던 중 에러발생: ", error);
@@ -102,14 +121,24 @@ const AdminEditPost = () => {
         })
       );
 
+      // productID를 숫자 또는 null로 변환
+      let productID = formData.productID;
+      if (productID === "" || productID === undefined) {
+        productID = null;
+      } else {
+        productID = Number(productID);
+        if (isNaN(productID)) productID = null;
+      }
+
       const postData = {
         title: formData.title,
         content: editorContent,
         fileUrl: [...formData.existingFiles, ...uploadedFiles],
         currentImages: currentImages,
+        productID, // 변환된 값 사용
       };
 
-      await axios.put(`http://localhost:8080/post/${id}`, postData, {
+      await axios.put(`http://localhost:8080/api/post/${id}`, postData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -420,6 +449,31 @@ const AdminEditPost = () => {
                 </ul>
               </div>
             )}
+          </div>
+
+          {/* 주문 상품 선택 */}
+          <div>
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              주문한 상품 선택 (태그로 표시)
+            </label>
+            <select
+              value={formData.productID}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  productID: e.target.value,
+                }))
+              }
+              className="block w-full border rounded-lg p-2"
+              required
+            >
+              <option value="">상품을 선택하세요</option>
+              {orderedProducts.map((product) => (
+                <option key={product.productID} value={product.productID}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-4 mt-8">

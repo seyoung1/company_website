@@ -48,7 +48,7 @@ const AdminCreatePost = () => {
         const res = await axios.get("http://localhost:8080/purchase", {
           withCredentials: true,
         });
-        setOrderedProducts(res.data.purchases || []);
+        setOrderedProducts(res.data.products || []);
       } catch (e) {
         setOrderedProducts([]);
       }
@@ -359,16 +359,11 @@ const AdminCreatePost = () => {
               required
             >
               <option value="">상품을 선택하세요</option>
-              {orderedProducts
-                .filter((item) => item.product) // 상품 정보가 있는 경우만
-                .map((item) => (
-                  <option
-                    key={item.product.productID}
-                    value={item.product.productID}
-                  >
-                    {item.product.name}
-                  </option>
-                ))}
+              {orderedProducts.map((product) => (
+                <option key={product.productID} value={product.productID}>
+                  {product.name}
+                </option>
+              ))}
             </select>
           </div>
 
