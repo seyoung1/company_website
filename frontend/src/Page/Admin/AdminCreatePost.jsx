@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
@@ -15,6 +15,8 @@ const AdminCreatePost = () => {
   const [uploadProgress, setUploadProgress] = useState({});
   const [currentUpload, setCurrentUpload] = useState(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [orderedProducts, setOrderedProducts] = useState([]);
+  const [selectedProductID, setSelectedProductID] = useState("");
 
   const UploadModal = ({ progress, fileName }) =>
     showUploadModal && (
@@ -38,6 +40,21 @@ const AdminCreatePost = () => {
         </div>
       </div>
     );
+
+  // 주문 상품 목록 불러오기
+  useEffect(() => {
+    const fetchOrderedProducts = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/purchase", {
+          withCredentials: true,
+        });
+        setOrderedProducts(res.data.purchases || []);
+      } catch (e) {
+        setOrderedProducts([]);
+      }
+    };
+    fetchOrderedProducts();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,6 +97,7 @@ const AdminCreatePost = () => {
         title: formData.title,
         content: editorContent,
         fileUrl: uploadedFiles,
+        productID: selectedProductID, // 선택한 상품ID 추가
       };
 
       await axios.post("http://localhost:8080/api/post", postData, {
@@ -131,7 +149,7 @@ const AdminCreatePost = () => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
-
+  console.log("Ordered Products:", orderedProducts);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-8">
@@ -327,6 +345,31 @@ const AdminCreatePost = () => {
                 </ul>
               </div>
             )}
+          </div>
+
+          {/* 주문 상품 선택 */}
+          <div>
+            <label className="block text-lg font-medium text-gray-700 mb-2">
+              주문한 상품 선택 (태그로 표시)
+            </label>
+            <select
+              value={selectedProductID}
+              onChange={(e) => setSelectedProductID(e.target.value)}
+              className="block w-full border rounded-lg p-2"
+              required
+            >
+              <option value="">상품을 선택하세요</option>
+              {orderedProducts
+                .filter((item) => item.product) // 상품 정보가 있는 경우만
+                .map((item) => (
+                  <option
+                    key={item.product.productID}
+                    value={item.product.productID}
+                  >
+                    {item.product.name}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-4 mt-8">

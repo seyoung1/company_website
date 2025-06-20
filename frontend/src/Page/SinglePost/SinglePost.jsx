@@ -18,6 +18,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { format } from "date-fns";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ShareIcon from "@mui/icons-material/Share";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -38,6 +39,7 @@ const SinglePost = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -46,6 +48,14 @@ const SinglePost = () => {
           `http://localhost:8080/api/post/${id}`
         );
         setPost(postResponse.data);
+
+        // 상품 정보도 함께 불러오기
+        if (postResponse.data.productID) {
+          const productRes = await axios.get(
+            `http://localhost:8080/api/products/${postResponse.data.productID}`
+          );
+          setProduct(productRes.data.product);
+        }
       } catch (error) {
         console.error("게시글 로딩 실패:", error);
       } finally {
@@ -115,6 +125,19 @@ const SinglePost = () => {
             </Box>
           </Box>
         </PostHeader>
+
+        {/* 상품 태그 표시 */}
+        {product && (
+          <Box sx={{ mb: 2 }}>
+            <Chip
+              icon={<LocalOfferIcon />}
+              label={product.name}
+              color="primary"
+              variant="outlined"
+              sx={{ fontWeight: "bold" }}
+            />
+          </Box>
+        )}
 
         <Divider sx={{ my: 3 }} />
 

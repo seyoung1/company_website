@@ -38,7 +38,7 @@ const AdminPosts = () => {
         await axios.delete(`http://localhost:8080/api/post/${id}`, {
           withCredentials: true,
         });
-        setPosts(posts.filter((post) => post._id !== id));
+        setPosts(posts.filter((post) => (post.postID || post.id) !== id));
         Swal.fire(
           "삭제완료!",
           "게시글이 성공적으로 삭제되었습니다.",
